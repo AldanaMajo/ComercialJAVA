@@ -19,11 +19,6 @@ public class UsuarioForm extends JFrame {
     private JTextField txtApellido;
     private JTextField txtLogin;
     private JTextField txtPassword;
-    private JTextField txtEstatus;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
 
 
     private JButton btnGuardar;
@@ -33,10 +28,13 @@ public class UsuarioForm extends JFrame {
 
 
     private JTable tabla;
+    private JComboBox<String> cbEstatus;
+
     private DefaultTableModel modelo;
 
 
     private UsuarioDAO usuarioDAO;
+
 
 
     public UsuarioForm(){
@@ -57,7 +55,7 @@ public class UsuarioForm extends JFrame {
 
 
 
-        JLabel lblId = new JLabel("ID:");
+        JLabel lblId = new JLabel("");
 
         lblId.setBounds(30,20,100,25);
 
@@ -69,7 +67,7 @@ public class UsuarioForm extends JFrame {
 
         txtId.setBounds(130,20,150,25);
 
-        txtId.setEnabled(false);
+        txtId.setVisible(false);
 
         add(txtId);
 
@@ -157,11 +155,15 @@ public class UsuarioForm extends JFrame {
 
 
 
-        txtEstatus = new JTextField();
+        cbEstatus = new JComboBox<>();
 
-        txtEstatus.setBounds(130,220,150,25);
+        cbEstatus.addItem("ACTIVO");
 
-        add(txtEstatus);
+        cbEstatus.addItem("INACTIVO");
+
+        cbEstatus.setBounds(130,220,150,25);
+
+        add(cbEstatus);
 
 
 
@@ -208,6 +210,7 @@ public class UsuarioForm extends JFrame {
 
 
 
+
         modelo = new DefaultTableModel();
 
 
@@ -237,6 +240,7 @@ public class UsuarioForm extends JFrame {
 
 
 
+
         cargarTabla();
 
 
@@ -249,6 +253,7 @@ public class UsuarioForm extends JFrame {
         btnEliminar.addActionListener(e -> eliminar());
 
         btnLimpiar.addActionListener(e -> limpiar());
+
 
 
 
@@ -271,6 +276,12 @@ public class UsuarioForm extends JFrame {
 
 
     }
+
+
+
+
+
+
 
     private void guardar(){
 
@@ -306,11 +317,22 @@ public class UsuarioForm extends JFrame {
 
 
 
-            usuario.setEstatus(
-                    Byte.parseByte(
-                            txtEstatus.getText()
-                    )
-            );
+            if(cbEstatus.getSelectedItem()
+                    .equals("ACTIVO")){
+
+
+                usuario.setEstatus((byte)1);
+
+
+            }else{
+
+
+                usuario.setEstatus((byte)2);
+
+
+            }
+
+
 
 
 
@@ -344,6 +366,13 @@ public class UsuarioForm extends JFrame {
 
     }
 
+
+
+
+
+
+
+
     private void cargarTabla(){
 
 
@@ -359,11 +388,13 @@ public class UsuarioForm extends JFrame {
 
 
 
+
             for(Usuario usuario : usuarios){
 
 
                 modelo.addRow(
                         new Object[]{
+
 
                                 usuario.getIdUsuario(),
 
@@ -374,6 +405,7 @@ public class UsuarioForm extends JFrame {
                                 usuario.getLogin(),
 
                                 usuario.getStrEstatus()
+
 
                         }
                 );
@@ -396,6 +428,13 @@ public class UsuarioForm extends JFrame {
 
 
     }
+
+
+
+
+
+
+
 
     private void actualizar(){
 
@@ -439,11 +478,22 @@ public class UsuarioForm extends JFrame {
 
 
 
-            usuario.setEstatus(
-                    Byte.parseByte(
-                            txtEstatus.getText()
-                    )
-            );
+            if(cbEstatus.getSelectedItem()
+                    .equals("ACTIVO")){
+
+
+                usuario.setEstatus((byte)1);
+
+
+            }else{
+
+
+                usuario.setEstatus((byte)2);
+
+
+            }
+
+
 
 
 
@@ -477,6 +527,13 @@ public class UsuarioForm extends JFrame {
 
     }
 
+
+
+
+
+
+
+
     private void eliminar(){
 
 
@@ -500,6 +557,7 @@ public class UsuarioForm extends JFrame {
             );
 
 
+
             cargarTabla();
 
             limpiar();
@@ -520,6 +578,13 @@ public class UsuarioForm extends JFrame {
 
     }
 
+
+
+
+
+
+
+
     private void seleccionar(){
 
 
@@ -533,9 +598,11 @@ public class UsuarioForm extends JFrame {
         );
 
 
+
         txtNombre.setText(
                 tabla.getValueAt(fila,1).toString()
         );
+
 
 
         txtApellido.setText(
@@ -543,11 +610,27 @@ public class UsuarioForm extends JFrame {
         );
 
 
+
         txtLogin.setText(
                 tabla.getValueAt(fila,3).toString()
         );
 
+
+
+        cbEstatus.setSelectedItem(
+                tabla.getValueAt(fila,4).toString()
+        );
+
+
+
     }
+
+
+
+
+
+
+
 
     private void limpiar(){
 
@@ -562,15 +645,28 @@ public class UsuarioForm extends JFrame {
 
         txtPassword.setText("");
 
-        txtEstatus.setText("");
+        cbEstatus.setSelectedIndex(0);
+
 
     }
 
+
+
+
+
+
+
     public static void main(String[] args){
+
 
         UsuarioForm formulario =
                 new UsuarioForm();
 
+
         formulario.setVisible(true);
+
+
     }
+
+
 }
