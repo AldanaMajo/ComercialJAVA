@@ -1,0 +1,20 @@
+USE ComercialJAVA;
+GO
+CREATE TABLE Usuario (
+    IdUsuario INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Login VARCHAR(200) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+    Estatus TINYINT NOT NULL,
+    FechaRegistro DATETIME NOT NULL DEFAULT GETDATE()
+);
+CREATE TABLE Marca (
+    IdMarca INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Categoria (
+    IdCategoria INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
