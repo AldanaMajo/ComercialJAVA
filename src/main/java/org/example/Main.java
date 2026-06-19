@@ -1,5 +1,6 @@
 package org.example;
 
+import Presentacion.MarcaForm;
 import Presentacion.UsuarioForm;
 import Presentacion.LoginForm;
 import Presentacion.Home;
@@ -14,14 +15,17 @@ public class Main {
             // se realicen de forma segura y sin bloqueos.
             Home homeForm = new Home();
 
-            LoginForm loginForm = new LoginForm(homeForm);
+
+            MarcaForm marca = new MarcaForm(null);
+            marca.setVisible(true);
+            /*LoginForm loginForm = new LoginForm(homeForm);
              loginForm.setVisible(true);
             UsuarioForm Usuario = new UsuarioForm();
             Usuario.setVisible(true);
 
              if(homeForm.getLogin() != null){
-             homeForm.setVisible(true);
-        } // Hace visible la ventana de inicio de sesión, solicitando al usuario que ingrese sus credenciales.
+             homeForm.setVisible(true);*/
+        //} // Hace visible la ventana de inicio de sesión, solicitando al usuario que ingrese sus credenciales.
         });
     }
 }
