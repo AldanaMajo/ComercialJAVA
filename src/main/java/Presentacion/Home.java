@@ -6,6 +6,7 @@ import Dominio.Usuario;
 public class Home extends JFrame {
 
     private Usuario Login;
+    private JDesktopPane escritorio;
 
     public Usuario getLogin() {
         return Login;
@@ -18,14 +19,15 @@ public class Home extends JFrame {
     public Home() {
         setTitle("Comercial Cruz JAVA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        escritorio = new JDesktopPane();
+        setContentPane(escritorio);
 
         crearMenu();
     }
 
     private void crearMenu() {
-
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
@@ -35,28 +37,41 @@ public class Home extends JFrame {
 
         JMenuItem itemSalir = new JMenuItem("Salir");
         menuPerfil.add(itemSalir);
-
         itemSalir.addActionListener(e -> System.exit(0));
 
         // PRODUCTO
         JMenu menuProducto = new JMenu("Producto");
         menuBar.add(menuProducto);
 
-        // Producto
         JMenuItem itemProducto = new JMenuItem("Producto");
         menuProducto.add(itemProducto);
+        itemProducto.addActionListener(e -> abrirFormulario(new ProductoForm()));
 
-        // Marca
         JMenuItem itemMarca = new JMenuItem("Marca");
         menuProducto.add(itemMarca);
+        itemMarca.addActionListener(e -> abrirFormulario(new MarcaForm()));
 
-        // Categoría
         JMenuItem itemCategoria = new JMenuItem("Categoria");
         menuProducto.add(itemCategoria);
+        itemCategoria.addActionListener(e -> abrirFormulario(new CategoriaForm()));
 
-        itemCategoria.addActionListener(e -> {
-            CategoriaForm categoriaForm = new CategoriaForm();
-            categoriaForm.setVisible(true);
-        });
+        // MANTENIMIENTO
+        JMenu menuMantenimiento = new JMenu("Mantenimiento");
+        menuBar.add(menuMantenimiento);
+
+        JMenuItem itemUsuario = new JMenuItem("Usuario");
+        menuMantenimiento.add(itemUsuario);
+        itemUsuario.addActionListener(e -> abrirFormulario(new UsuarioForm()));
+    }
+
+    private void abrirFormulario(JInternalFrame formulario) {
+        escritorio.add(formulario);
+        formulario.setVisible(true);
+
+        try {
+            formulario.setSelected(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

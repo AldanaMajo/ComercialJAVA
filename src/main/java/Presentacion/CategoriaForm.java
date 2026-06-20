@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-public class CategoriaForm extends JFrame {
+public class CategoriaForm extends JInternalFrame {
 
     private JTextField txtId;
     private JTextField txtNombre;
@@ -15,11 +15,7 @@ public class CategoriaForm extends JFrame {
     private JButton btnGuardar;
     private JButton btnActualizar;
     private JButton btnEliminar;
-    private JLabel lblNombre;
     private JButton btnLimpiar;
-    private JTable table1;
-    private JScrollBar scroll;
-    private JLabel lblId;
 
     private JTable tabla;
     private DefaultTableModel modelo;
@@ -27,14 +23,13 @@ public class CategoriaForm extends JFrame {
     private CategoriaDAO categoriaDAO;
 
     public CategoriaForm() {
+        super("Mantenimiento de Categorías", true, true, true, true);
 
         categoriaDAO = new CategoriaDAO();
 
-        setTitle("Mantenimiento de Categorías");
         setSize(700, 500);
         setLayout(null);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true);
 
         JLabel lblId = new JLabel("");
         lblId.setBounds(30, 20, 100, 25);
@@ -70,7 +65,6 @@ public class CategoriaForm extends JFrame {
         add(btnLimpiar);
 
         modelo = new DefaultTableModel();
-
         modelo.addColumn("Id");
         modelo.addColumn("Nombre");
 
@@ -95,154 +89,94 @@ public class CategoriaForm extends JFrame {
     }
 
     private void guardar() {
-
         try {
-
             Categoria categoria = new Categoria();
-
-            categoria.setNombre(txtNombre.getText());
+            categoria.setNombre(txtNombre.getText().trim());
 
             categoriaDAO.Crear(categoria);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Categoría guardada correctamente"
-            );
-
+            JOptionPane.showMessageDialog(this, "Categoría guardada correctamente");
             cargarTabla();
             limpiar();
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     private void cargarTabla() {
-
         try {
-
             modelo.setRowCount(0);
 
-            ArrayList<Categoria> categorias =
-                    categoriaDAO.Buscar("");
+            ArrayList<Categoria> categorias = categoriaDAO.Buscar("");
 
             for (Categoria categoria : categorias) {
-
-                modelo.addRow(
-                        new Object[]{
-                                categoria.getId(),
-                                categoria.getNombre()
-                        }
-                );
+                modelo.addRow(new Object[]{
+                        categoria.getId(),
+                        categoria.getNombre()
+                });
             }
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     private void actualizar() {
-
         try {
+            if (txtId.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione una categoría de la tabla");
+                return;
+            }
 
             Categoria categoria = new Categoria();
-
-            categoria.setId(
-                    Integer.parseInt(
-                            txtId.getText()
-                    )
-            );
-
-            categoria.setNombre(
-                    txtNombre.getText()
-            );
+            categoria.setId(Integer.parseInt(txtId.getText()));
+            categoria.setNombre(txtNombre.getText().trim());
 
             categoriaDAO.Actualizar(categoria);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Categoría actualizada"
-            );
-
+            JOptionPane.showMessageDialog(this, "Categoría actualizada");
             cargarTabla();
             limpiar();
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     private void eliminar() {
-
         try {
+            if (txtId.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione una categoría de la tabla");
+                return;
+            }
 
             Categoria categoria = new Categoria();
-
-            categoria.setId(
-                    Integer.parseInt(
-                            txtId.getText()
-                    )
-            );
+            categoria.setId(Integer.parseInt(txtId.getText()));
 
             categoriaDAO.Eliminar(categoria);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Categoría eliminada"
-            );
-
+            JOptionPane.showMessageDialog(this, "Categoría eliminada");
             cargarTabla();
             limpiar();
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     private void seleccionar() {
-
         int fila = tabla.getSelectedRow();
 
-        if (fila == -1) {
-            return;
-        }
+        if (fila == -1) return;
 
-        txtId.setText(
-                tabla.getValueAt(fila, 0).toString()
-        );
-
-        txtNombre.setText(
-                tabla.getValueAt(fila, 1).toString()
-        );
+        txtId.setText(tabla.getValueAt(fila, 0).toString());
+        txtNombre.setText(tabla.getValueAt(fila, 1).toString());
     }
 
     private void limpiar() {
-
         txtId.setText("");
         txtNombre.setText("");
-    }
-
-    public static void main(String[] args) {
-
-        CategoriaForm formulario =
-                new CategoriaForm();
-
-        formulario.setVisible(true);
+        tabla.clearSelection();
     }
 }

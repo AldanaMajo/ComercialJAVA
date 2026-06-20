@@ -1,19 +1,13 @@
 package Presentacion;
 
-
 import Dominio.Producto;
 import Persistencia.ProductoDAO;
-
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-
-
-public class ProductoForm extends JFrame {
-
-
+public class ProductoForm extends JInternalFrame {
 
     private JTextField txtId;
     private JTextField txtNombre;
@@ -21,588 +15,247 @@ public class ProductoForm extends JFrame {
     private JTextField txtPrecio;
     private JTextField txtStock;
 
-
     private JComboBox<Integer> cbCategoria;
     private JComboBox<Integer> cbMarca;
-
 
     private JButton btnGuardar;
     private JButton btnActualizar;
     private JButton btnEliminar;
     private JButton btnLimpiar;
 
-
     private JTable tabla;
-
     private DefaultTableModel modelo;
-
 
     private ProductoDAO productoDAO;
 
-
-    public ProductoForm(){
-
+    public ProductoForm() {
+        super("Mantenimiento de Productos", true, true, true, true);
 
         productoDAO = new ProductoDAO();
 
-
-
-        setTitle("Mantenimiento de Productos");
-
-        setSize(800,600);
-
+        setSize(800, 600);
         setLayout(null);
-
-        setLocationRelativeTo(null);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+        setVisible(true);
 
         JLabel id = new JLabel("");
-
-        id.setBounds(30,20,100,25);
-
+        id.setBounds(30, 20, 100, 25);
         add(id);
 
-
-        txtId=new JTextField();
-
-        txtId.setBounds(120,20,150,25);
-
+        txtId = new JTextField();
+        txtId.setBounds(120, 20, 150, 25);
         txtId.setVisible(false);
-
         add(txtId);
 
-
-
-
-
-        JLabel nombre=new JLabel("Nombre:");
-
-        nombre.setBounds(30,60,100,25);
-
+        JLabel nombre = new JLabel("Nombre:");
+        nombre.setBounds(30, 60, 100, 25);
         add(nombre);
 
-
-        txtNombre=new JTextField();
-
-        txtNombre.setBounds(120,60,150,25);
-
+        txtNombre = new JTextField();
+        txtNombre.setBounds(120, 60, 150, 25);
         add(txtNombre);
 
-
-
-
-
-        JLabel descripcion=new JLabel("Descripcion:");
-
-        descripcion.setBounds(30,100,100,25);
-
+        JLabel descripcion = new JLabel("Descripción:");
+        descripcion.setBounds(30, 100, 100, 25);
         add(descripcion);
 
-
-        txtDescripcion=new JTextField();
-
-        txtDescripcion.setBounds(120,100,150,25);
-
+        txtDescripcion = new JTextField();
+        txtDescripcion.setBounds(120, 100, 150, 25);
         add(txtDescripcion);
 
-
-
-
-
-        JLabel categoria=new JLabel("Categoria:");
-
-        categoria.setBounds(30,140,100,25);
-
+        JLabel categoria = new JLabel("Categoría:");
+        categoria.setBounds(30, 140, 100, 25);
         add(categoria);
 
-
-
-        cbCategoria=new JComboBox<>();
-
+        cbCategoria = new JComboBox<>();
         cbCategoria.addItem(1);
-
         cbCategoria.addItem(2);
-
-        cbCategoria.setBounds(120,140,150,25);
-
+        cbCategoria.setBounds(120, 140, 150, 25);
         add(cbCategoria);
 
-
-
-
-
-        JLabel marca=new JLabel("Marca:");
-
-        marca.setBounds(30,180,100,25);
-
+        JLabel marca = new JLabel("Marca:");
+        marca.setBounds(30, 180, 100, 25);
         add(marca);
 
-
-
-        cbMarca=new JComboBox<>();
-
+        cbMarca = new JComboBox<>();
         cbMarca.addItem(1);
-
         cbMarca.addItem(2);
-
-        cbMarca.setBounds(120,180,150,25);
-
+        cbMarca.setBounds(120, 180, 150, 25);
         add(cbMarca);
 
-
-
-
-
-
-        JLabel precio=new JLabel("Precio:");
-
-        precio.setBounds(30,220,100,25);
-
+        JLabel precio = new JLabel("Precio:");
+        precio.setBounds(30, 220, 100, 25);
         add(precio);
 
-
-
-        txtPrecio=new JTextField();
-
-        txtPrecio.setBounds(120,220,150,25);
-
+        txtPrecio = new JTextField();
+        txtPrecio.setBounds(120, 220, 150, 25);
         add(txtPrecio);
 
-
-
-
-
-
-        JLabel stock=new JLabel("Stock:");
-
-        stock.setBounds(30,260,100,25);
-
+        JLabel stock = new JLabel("Stock:");
+        stock.setBounds(30, 260, 100, 25);
         add(stock);
 
-
-
-        txtStock=new JTextField();
-
-        txtStock.setBounds(120,260,150,25);
-
+        txtStock = new JTextField();
+        txtStock.setBounds(120, 260, 150, 25);
         add(txtStock);
 
-
-
-
-
-
-
-        btnGuardar=new JButton("Guardar");
-
-        btnGuardar.setBounds(350,60,120,30);
-
+        btnGuardar = new JButton("Guardar");
+        btnGuardar.setBounds(350, 60, 120, 30);
         add(btnGuardar);
 
-
-
-        btnActualizar=new JButton("Actualizar");
-
-        btnActualizar.setBounds(350,100,120,30);
-
+        btnActualizar = new JButton("Actualizar");
+        btnActualizar.setBounds(350, 100, 120, 30);
         add(btnActualizar);
 
-
-
-        btnEliminar=new JButton("Eliminar");
-
-        btnEliminar.setBounds(350,140,120,30);
-
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBounds(350, 140, 120, 30);
         add(btnEliminar);
 
-
-
-        btnLimpiar=new JButton("Limpiar");
-
-        btnLimpiar.setBounds(350,180,120,30);
-
+        btnLimpiar = new JButton("Limpiar");
+        btnLimpiar.setBounds(350, 180, 120, 30);
         add(btnLimpiar);
 
-
-
-
-
-
-
-        modelo=new DefaultTableModel();
-
-
+        modelo = new DefaultTableModel();
         modelo.addColumn("ID");
-
         modelo.addColumn("Categoria");
-
         modelo.addColumn("Marca");
-
         modelo.addColumn("Nombre");
-
         modelo.addColumn("Descripcion");
-
         modelo.addColumn("Precio");
-
         modelo.addColumn("Stock");
 
+        tabla = new JTable(modelo);
 
-
-        tabla=new JTable(modelo);
-
-
-
-        JScrollPane scroll=new JScrollPane(tabla);
-
-        scroll.setBounds(30,330,720,180);
-
+        JScrollPane scroll = new JScrollPane(tabla);
+        scroll.setBounds(30, 330, 720, 180);
         add(scroll);
-
-
-
 
         cargarTabla();
 
+        btnGuardar.addActionListener(e -> guardar());
+        btnActualizar.addActionListener(e -> actualizar());
+        btnEliminar.addActionListener(e -> eliminar());
+        btnLimpiar.addActionListener(e -> limpiar());
 
-
-
-        btnGuardar.addActionListener(e->guardar());
-
-        btnActualizar.addActionListener(e->actualizar());
-
-        btnEliminar.addActionListener(e->eliminar());
-
-        btnLimpiar.addActionListener(e->limpiar());
-
-
-
-        tabla.addMouseListener(new java.awt.event.MouseAdapter(){
-
-            public void mouseClicked(java.awt.event.MouseEvent e){
-
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
                 seleccionar();
-
             }
-
         });
-
-
     }
 
+    private void guardar() {
+        try {
+            Producto p = new Producto();
 
-
-
-
-
-    private void guardar(){
-
-
-        try{
-
-
-            Producto p=new Producto();
-
-
-            p.setIdCategoria(
-                    (int)cbCategoria.getSelectedItem()
-            );
-
-
-            p.setIdMarca(
-                    (int)cbMarca.getSelectedItem()
-            );
-
-
-            p.setNombre(
-                    txtNombre.getText()
-            );
-
-
-            p.setDescripcion(
-                    txtDescripcion.getText()
-            );
-
-
-            p.setPrecio(
-                    Double.parseDouble(txtPrecio.getText())
-            );
-
-
-            p.setStock(
-                    Integer.parseInt(txtStock.getText())
-            );
-
-
+            p.setIdCategoria((int) cbCategoria.getSelectedItem());
+            p.setIdMarca((int) cbMarca.getSelectedItem());
+            p.setNombre(txtNombre.getText().trim());
+            p.setDescripcion(txtDescripcion.getText().trim());
+            p.setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
+            p.setStock(Integer.parseInt(txtStock.getText().trim()));
 
             productoDAO.crear(p);
 
-
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Producto guardado"
-            );
-
-
+            JOptionPane.showMessageDialog(this, "Producto guardado");
             cargarTabla();
-
             limpiar();
 
-
-
-        }catch(Exception e){
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
     }
 
-
-
-
-
-
-    private void cargarTabla(){
-
-
-        try{
-
-
+    private void cargarTabla() {
+        try {
             modelo.setRowCount(0);
 
+            ArrayList<Producto> lista = productoDAO.obtenerTodos();
 
-
-            ArrayList<Producto> lista =
-                    productoDAO.obtenerTodos();
-
-
-
-            for(Producto p:lista){
-
-
+            for (Producto p : lista) {
                 modelo.addRow(new Object[]{
-
-
                         p.getId(),
-
                         p.getIdCategoria(),
-
                         p.getIdMarca(),
-
                         p.getNombre(),
-
                         p.getDescripcion(),
-
                         p.getPrecio(),
-
                         p.getStock()
-
-
                 });
-
-
             }
 
-
-        }catch(Exception e){
-
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
     }
 
+    private void actualizar() {
+        try {
+            if (txtId.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla");
+                return;
+            }
 
+            Producto p = new Producto();
 
-
-
-    private void actualizar(){
-
-
-        try{
-
-
-            Producto p=new Producto();
-
-
-            p.setId(
-                    Integer.parseInt(txtId.getText())
-            );
-
-
-            p.setIdCategoria(
-                    (int)cbCategoria.getSelectedItem()
-            );
-
-
-            p.setIdMarca(
-                    (int)cbMarca.getSelectedItem()
-            );
-
-
-            p.setNombre(txtNombre.getText());
-
-
-            p.setDescripcion(txtDescripcion.getText());
-
-
-            p.setPrecio(
-                    Double.parseDouble(txtPrecio.getText())
-            );
-
-
-            p.setStock(
-                    Integer.parseInt(txtStock.getText())
-            );
-
-
+            p.setId(Integer.parseInt(txtId.getText()));
+            p.setIdCategoria((int) cbCategoria.getSelectedItem());
+            p.setIdMarca((int) cbMarca.getSelectedItem());
+            p.setNombre(txtNombre.getText().trim());
+            p.setDescripcion(txtDescripcion.getText().trim());
+            p.setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
+            p.setStock(Integer.parseInt(txtStock.getText().trim()));
 
             productoDAO.actualizar(p);
 
-
+            JOptionPane.showMessageDialog(this, "Producto actualizado");
             cargarTabla();
-
             limpiar();
 
-
-
-        }catch(Exception e){
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
-
     }
 
+    private void eliminar() {
+        try {
+            if (txtId.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla");
+                return;
+            }
 
+            productoDAO.eliminar(Integer.parseInt(txtId.getText()));
 
-
-
-    private void eliminar(){
-
-
-        try{
-
-
-            productoDAO.eliminar(
-                    Integer.parseInt(txtId.getText())
-            );
-
-
+            JOptionPane.showMessageDialog(this, "Producto eliminado");
             cargarTabla();
-
             limpiar();
 
-
-
-        }catch(Exception e){
-
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    e.getMessage()
-            );
-
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
-
     }
 
+    private void seleccionar() {
+        int fila = tabla.getSelectedRow();
 
+        if (fila == -1) return;
 
-
-
-
-
-    private void seleccionar(){
-
-
-        int fila=tabla.getSelectedRow();
-
-
-        txtId.setText(
-                tabla.getValueAt(fila,0).toString()
-        );
-
-
-        cbCategoria.setSelectedItem(
-                tabla.getValueAt(fila,1)
-        );
-
-
-        cbMarca.setSelectedItem(
-                tabla.getValueAt(fila,2)
-        );
-
-
-        txtNombre.setText(
-                tabla.getValueAt(fila,3).toString()
-        );
-
-
-        txtDescripcion.setText(
-                tabla.getValueAt(fila,4).toString()
-        );
-
-
-        txtPrecio.setText(
-                tabla.getValueAt(fila,5).toString()
-        );
-
-
-        txtStock.setText(
-                tabla.getValueAt(fila,6).toString()
-        );
-
+        txtId.setText(tabla.getValueAt(fila, 0).toString());
+        cbCategoria.setSelectedItem(tabla.getValueAt(fila, 1));
+        cbMarca.setSelectedItem(tabla.getValueAt(fila, 2));
+        txtNombre.setText(tabla.getValueAt(fila, 3).toString());
+        txtDescripcion.setText(tabla.getValueAt(fila, 4).toString());
+        txtPrecio.setText(tabla.getValueAt(fila, 5).toString());
+        txtStock.setText(tabla.getValueAt(fila, 6).toString());
     }
 
-
-
-
-
-
-    private void limpiar(){
-
-
+    private void limpiar() {
         txtId.setText("");
-
         txtNombre.setText("");
-
         txtDescripcion.setText("");
-
         txtPrecio.setText("");
-
         txtStock.setText("");
-
+        cbCategoria.setSelectedIndex(0);
+        cbMarca.setSelectedIndex(0);
+        tabla.clearSelection();
     }
-
-
-
-
-    public static void main(String[] args){
-
-
-        new ProductoForm().setVisible(true);
-
-
-    }
-
-
-
 }
